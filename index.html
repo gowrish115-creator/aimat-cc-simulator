@@ -3282,6 +3282,8 @@ function tpKey(k) {
 (function () {
   const css = `.kpg{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:4px}.kpg button{padding:7px 0;border:1px solid #b8c2cc;border-radius:6px;background:#f4f6f8;font-weight:700;font-size:13px;cursor:pointer}
 .kpg button.w{background:#e3f2e5}.kpg button.b{background:#fff3e0}
+.kpg.kp5{grid-template-columns:repeat(5,1fr);background:#3a3f44;padding:8px;border-radius:8px;gap:6px}.kpg.kp5 button{background:#f4f4f0;border-color:#999}
+.kpg.kp5 .kt{background:#f26b2a;color:#fff}.kpg.kp5 .kb{background:#29a3e0;color:#fff}.kpg.kp5 .kx{background:#e0454b;color:#fff}.kpg.kp5 .ky{background:#e8e23a}.kpg.kp5 .ks{background:#2e9e5b;color:#fff;grid-row:span 2;font-size:11px;line-height:1.25}
 .sesst.ses-g{background:#4caf50;color:#fff}.sesst.ses-o{background:#ff9900;color:#000}.sesst.ses-r{background:#ff3333;color:#fff}.sesst.ses-w{background:#0062a8;color:#fff}.sesst.ses-t{background:#c5c5c2;color:#000}
 .relive input{font-family:Roboto,Arial,sans-serif;text-align:center}
 .nm.renm{font-weight:700;text-align:center;display:flex;align-items:center;justify-content:center}.nm.renm.red{background:#f94b4f;color:#fff}
@@ -3299,10 +3301,9 @@ function tpKey(k) {
   const addKeypad = () => {
     if ($('tp_kp') || !$('tp_w')) return; const sec = $('tp_w').closest('.sec'); if (!sec) return;
     const b = (k, t, c) => `<button class="${c || ''}" onmousedown="event.preventDefault()" onclick="tpKey('${k}')">${t || k}</button>`;
-    sec.insertAdjacentHTML('afterend', `<div class="sec" id="tp_kp"><b>&#9000; Bluetooth keypad (UK:)</b>
-      <div class="kpg">${b('7')}${b('8')}${b('9')}${b('UP', '&uarr;', 'b')}${b('4')}${b('5')}${b('6')}${b('DOWN', '&darr;', 'b')}${b('1')}${b('2')}${b('3')}${b('LEFT', '&larr;', 'b')}${b('.')}${b('0')}${b('DELETE', 'DEL')}${b('RIGHT', '&rarr;', 'b')}
-      ${b('TARE', 'TARE', 'w')}${b('BACK', 'BACK', 'w')}${b('CAPTURE', 'CAPT', 'w')}${b('ENTER', 'ENTER', 'w')}</div>
-      <div class="hint" style="margin-top:6px">Sends <code>UK:&lt;key&gt;</code> like the set-top box keypad: digits / "." / DEL go to the focused field, &uarr;&darr; move Route &harr; Vendor &harr; No of Cans, ENTER = Save, BACK/CAPT = Capture (accumulate) or Back. Quality entry: &larr;&rarr; FAT/SNF, ENTER = Save.</div></div>`);
+    sec.insertAdjacentHTML('afterend', `<div class="sec" id="tp_kp"><b>&#9000; Unit keypad (UK:)</b>
+      <div class="kpg kp5">${b('1')}${b('2')}${b('3')}${b('TARE', 'T', 'kt')}${b('BACK', '&#8634;', 'kb')}${b('4')}${b('5')}${b('6')}${b('DELETE', '&#9003;', 'kx')}<button class="ks" onmousedown="event.preventDefault()" onclick="tpKey('ENTER')">S<br>A<br>V<br>E</button>${b('7')}${b('8')}${b('9')}${b('UP', '&uarr;', 'ky')}${b('.')}${b('0')}${b('LEFT', '&larr;', 'ky')}${b('DOWN', '&darr;', 'ky')}${b('RIGHT', '&rarr;', 'ky')}</div>
+      <div class="hint" style="margin-top:6px">Same 20 keys as the unit's membrane keypad; each sends <code>UK:&lt;key&gt;</code>: T = TARE, &#8634; = BACK (Capture when accumulating, else Back), &#9003; = DELETE, SAVE = ENTER. Digits / "." go to the focused field; &uarr;&darr; move Route &harr; Vendor &harr; No of Cans; Quality entry &larr;&rarr; FAT/SNF. "." outside an entry = F1 (Add).</div></div>`);
   };
   if (document.readyState === 'loading') window.addEventListener('DOMContentLoaded', addKeypad); else addKeypad();
   window.addEventListener('load', addKeypad);
